@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tangzhe.cslg.dao.CourseMapper" >
+  <resultMap id="BaseResultMap" type="com.tangzhe.cslg.entity.Course" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="course_name" property="courseName" jdbcType="VARCHAR" />
+    <result column="course_englishname" property="courseEnglishname" jdbcType="VARCHAR" />
+    <result column="course_type" property="courseType" jdbcType="INTEGER" />
+    <result column="course_desc" property="courseDesc" jdbcType="VARCHAR" />
+    <result column="course_code" property="courseCode" jdbcType="VARCHAR" />
+    <result column="major_id" property="majorId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, course_name, course_englishname, course_type, course_desc, course_code, major_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from course
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from course
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tangzhe.cslg.entity.Course" >
+    insert into course (id, course_name, course_englishname, 
+      course_type, course_desc, course_code, 
+      major_id, order_no)
+    values (#{id,jdbcType=VARCHAR}, #{courseName,jdbcType=VARCHAR}, #{courseEnglishname,jdbcType=VARCHAR}, 
+      #{courseType,jdbcType=INTEGER}, #{courseDesc,jdbcType=VARCHAR}, #{courseCode,jdbcType=VARCHAR}, 
+      #{majorId,jdbcType=VARCHAR}, #{orderNo,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tangzhe.cslg.entity.Course" >
+    insert into course
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="courseName != null" >
+        course_name,
+      </if>
+      <if test="courseEnglishname != null" >
+        course_englishname,
+      </if>
+      <if test="courseType != null" >
+        course_type,
+      </if>
+      <if test="courseDesc != null" >
+        course_desc,
+      </if>
+      <if test="courseCode != null" >
+        course_code,
+      </if>
+      <if test="majorId != null" >
+        major_id,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="courseName != null" >
+        #{courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="courseEnglishname != null" >
+        #{courseEnglishname,jdbcType=VARCHAR},
+      </if>
+      <if test="courseType != null" >
+        #{courseType,jdbcType=INTEGER},
+      </if>
+      <if test="courseDesc != null" >
+        #{courseDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="courseCode != null" >
+        #{courseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="majorId != null" >
+        #{majorId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tangzhe.cslg.entity.Course" >
+    update course
+    <set >
+      <if test="courseName != null" >
+        course_name = #{courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="courseEnglishname != null" >
+        course_englishname = #{courseEnglishname,jdbcType=VARCHAR},
+      </if>
+      <if test="courseType != null" >
+        course_type = #{courseType,jdbcType=INTEGER},
+      </if>
+      <if test="courseDesc != null" >
+        course_desc = #{courseDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="courseCode != null" >
+        course_code = #{courseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="majorId != null" >
+        major_id = #{majorId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tangzhe.cslg.entity.Course" >
+    update course
+    set course_name = #{courseName,jdbcType=VARCHAR},
+      course_englishname = #{courseEnglishname,jdbcType=VARCHAR},
+      course_type = #{courseType,jdbcType=INTEGER},
+      course_desc = #{courseDesc,jdbcType=VARCHAR},
+      course_code = #{courseCode,jdbcType=VARCHAR},
+      major_id = #{majorId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="findByCount" resultType="java.lang.Integer">
+    select count(*) from course
+  </select>
+
+  <select id="findByPage" resultType="com.tangzhe.cslg.pojo.CourseVo">
+    SELECT c.id, c.course_name courseName, c.course_englishname courseEnglishname,
+    c.course_type courseType, c.course_desc courseDesc, c.course_code courseCode,
+    c.major_id majorId
+    FROM course c
+    order by c.order_no
+    LIMIT #{startRow}, #{pageSize}
+  </select>
+
+  <delete id="deletePointCourseByCourseId" parameterType="string">
+    delete from point_course
+    where course_id = #{courseId}
+  </delete>
+
+  <insert id="insertPointCourse">
+    INSERT INTO point_course VALUES(#{pointId}, #{courseId})
+  </insert>
+
+  <delete id="deletePointCourseByMajorIdAndCourseId">
+    DELETE
+    FROM point_course p
+    WHERE p.point_id IN (
+                        SELECT pc.point_id
+                        FROM point_course pc
+                        LEFT JOIN index_point ip ON pc.point_id = ip.id
+                        WHERE ip.major_id = #{majorId}
+                        AND pc.course_id = #{courseId}
+    )
+  </delete>
+
+  <select id="findCountByMajorId" resultType="java.lang.Integer">
+    SELECT COUNT(*)
+    FROM course c
+    LEFT JOIN course_teacher ct ON ct.course_id = c.id
+    LEFT JOIN teacher t ON ct.teacher_id = t.id
+    WHERE t.depart_id = (
+            SELECT depart_id
+            FROM major m
+            WHERE m.id = #{majorId}
+    )
+    <if test="courseName != null">
+      and c.course_name like '%${courseName}%'
+    </if>
+    <if test="teacherName != null">
+      and t.teacher_name like '%${teacherName}%'
+    </if>
+  </select>
+
+  <select id="findPageByMajorId" resultType="com.tangzhe.cslg.pojo.CourseVo">
+    SELECT c.id, c.course_name courseName,
+	c.course_code courseCode, t.id teacherId,
+	t.teacher_name teacherName, d.depart_name departName
+    FROM course c
+    LEFT JOIN course_teacher ct ON ct.course_id = c.id
+    LEFT JOIN teacher t ON ct.teacher_id = t.id
+    LEFT JOIN department d ON d.id = t.depart_id
+    WHERE t.depart_id = (
+            SELECT depart_id
+            FROM major m
+            WHERE m.id = #{majorId}
+    )
+    <if test="courseName != null">
+      and c.course_name like '%${courseName}%'
+    </if>
+    <if test="teacherName != null">
+      and t.teacher_name like '%${teacherName}%'
+    </if>
+    LIMIT #{startRow}, #{pageSize}
+  </select>
+
+  <select id="findCourseByTeacherId" parameterType="string" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM course c
+    LEFT JOIN course_teacher ct ON ct.course_id = c.id
+    WHERE ct.teacher_id = #{teacherId}
+  </select>
+
+  <select id="findPointCountByCourseId" resultType="java.lang.Integer">
+    SELECT count(*)
+    FROM index_point ip
+    LEFT JOIN point_course pc ON pc.point_id = ip.id
+    LEFT JOIN course c ON c.id = pc.course_id
+    LEFT JOIN major m ON m.id = ip.major_id
+    WHERE pc.course_id = #{id}
+  </select>
+
+  <select id="findPointPageByCourseId" resultType="com.tangzhe.cslg.pojo.PointVo">
+    SELECT ip.id, ip.point_name pointName, ip.point_desc pointDesc,
+          c.course_name courseName, m.major_name majorName
+    FROM index_point ip
+    LEFT JOIN point_course pc ON pc.point_id = ip.id
+    LEFT JOIN course c ON c.id = pc.course_id
+    LEFT JOIN major m ON m.id = ip.major_id
+    WHERE pc.course_id = #{id}
+    ORDER BY ip.point_name
+    LIMIT #{startRow}, #{pageSize}
+  </select>
+
+  <delete id="deletePointCourse">
+    delete from point_course
+    where point_id = #{pointId}
+    and course_id = #{courseId}
+  </delete>
+
+  <select id="findCourseListByClassIdAndTeacherId" resultMap="BaseResultMap">
+    SELECT c.*
+    FROM course c
+    LEFT JOIN class_course_teacher ct ON ct.course_id = c.id
+    WHERE ct.class_id = #{classId}
+    AND ct.teacher_id = #{teacherId}
+  </select>
+
+  <select id="findCourseListByClassId" parameterType="string" resultMap="BaseResultMap">
+    SELECT c.*
+    FROM course c
+    LEFT JOIN class_course_teacher ct ON ct.course_id = c.id
+    WHERE ct.class_id = #{classId}
+  </select>
+
+  <select id="findCourseVoList" resultType="com.tangzhe.cslg.pojo.CourseVo">
+    SELECT id, order_no orderNo, course_name courseName
+    FROM course
+    ORDER BY order_no
+  </select>
+
+  <select id="findCourseVoListByMid" parameterType="string" resultType="com.tangzhe.cslg.pojo.CourseVo">
+    SELECT c.id, c.order_no orderNo, c.course_name courseName
+    FROM course c
+    WHERE c.id IN (
+            SELECT DISTINCT cb.course_id id
+            FROM course_byyq cb
+            WHERE cb.mid = #{mid}
+            )
+    ORDER BY c.order_no
+  </select>
+
+  <select id="findZbyyqByCourseIdAndMid" resultType="com.tangzhe.cslg.entity.Zbyyq">
+    SELECT z.*
+    FROM course_byyq cb
+    LEFT JOIN zbyyq z ON z.id = cb.zbyyq_id
+    WHERE cb.course_id = #{courseId}
+    AND mid = #{mid}
+    ORDER BY order_no
+  </select>
+
+  <select id="findZbyyqListByCourseIdAndMid" resultType="com.tangzhe.cslg.pojo.ByyqPointVo">
+    SELECT z.id, z.fid, z.fname, z.name,
+	      z.byyq_desc byyqDesc, z.order_no orderNo, cb.quanzhong,
+	      cb.course_id courseId, cb.mid
+    FROM course_byyq cb
+    LEFT JOIN zbyyq z ON z.id = cb.zbyyq_id
+    WHERE cb.course_id = #{courseId}
+    AND mid = #{mid}
+    ORDER BY order_no
+  </select>
+
+  <select id="findCourseListByMidAndZbyyqId" resultType="com.tangzhe.cslg.pojo.CourseStatistic">
+    SELECT cb.course_id courseId, c.course_name courseName, cb.quanzhong qz
+    FROM course_byyq cb
+    LEFT JOIN course c ON c.id = cb.course_id
+    WHERE mid = #{mid}
+    AND zbyyq_id = #{pointId}
+    ORDER BY c.order_no
+  </select>
+
+  <select id="findCourseListByMidAndFbyyqId" resultType="com.tangzhe.cslg.pojo.CourseStatistic">
+    SELECT cb.course_id courseId, c.course_name courseName, cb.quanzhong qz
+    FROM course_byyq cb
+    LEFT JOIN course c ON c.id = cb.course_id
+    LEFT JOIN zbyyq z ON z.id = cb.zbyyq_id
+    LEFT JOIN fbyyq f ON f.id = z.fid
+    WHERE mid = #{mid}
+    AND f.id = #{fid}
+    GROUP BY c.course_name
+    ORDER BY c.order_no
+  </select>
+
+  <select id="findAllCourse" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from course
+  </select>
+
+</mapper>

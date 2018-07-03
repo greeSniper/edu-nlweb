@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tangzhe.cslg.dao.QuestionMapper" >
+  <resultMap id="BaseResultMap" type="com.tangzhe.cslg.entity.Question" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="tp_id" property="tpId" jdbcType="VARCHAR" />
+    <result column="point_id" property="pointId" jdbcType="VARCHAR" />
+    <result column="point_name" property="pointName" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="DOUBLE" />
+    <result column="quanzhong" property="quanzhong" jdbcType="DOUBLE" />
+    <result column="question_name" property="questionName" jdbcType="VARCHAR" />
+    <result column="question_content" property="questionContent" jdbcType="VARCHAR" />
+    <result column="question_type" property="questionType" jdbcType="INTEGER" />
+    <result column="question_img" property="questionImg" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, tp_id, point_id, point_name, score, quanzhong, question_name, question_content, 
+    question_type, question_img, order_no
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from question
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from question
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tangzhe.cslg.entity.Question" >
+    insert into question (id, tp_id, point_id, 
+      point_name, score, quanzhong, 
+      question_name, question_content, question_type, 
+      question_img, order_no)
+    values (#{id,jdbcType=VARCHAR}, #{tpId,jdbcType=VARCHAR}, #{pointId,jdbcType=VARCHAR}, 
+      #{pointName,jdbcType=VARCHAR}, #{score,jdbcType=DOUBLE}, #{quanzhong,jdbcType=DOUBLE}, 
+      #{questionName,jdbcType=VARCHAR}, #{questionContent,jdbcType=VARCHAR}, #{questionType,jdbcType=INTEGER}, 
+      #{questionImg,jdbcType=VARCHAR}, #{orderNo,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tangzhe.cslg.entity.Question" >
+    insert into question
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="tpId != null" >
+        tp_id,
+      </if>
+      <if test="pointId != null" >
+        point_id,
+      </if>
+      <if test="pointName != null" >
+        point_name,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="quanzhong != null" >
+        quanzhong,
+      </if>
+      <if test="questionName != null" >
+        question_name,
+      </if>
+      <if test="questionContent != null" >
+        question_content,
+      </if>
+      <if test="questionType != null" >
+        question_type,
+      </if>
+      <if test="questionImg != null" >
+        question_img,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="tpId != null" >
+        #{tpId,jdbcType=VARCHAR},
+      </if>
+      <if test="pointId != null" >
+        #{pointId,jdbcType=VARCHAR},
+      </if>
+      <if test="pointName != null" >
+        #{pointName,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="quanzhong != null" >
+        #{quanzhong,jdbcType=DOUBLE},
+      </if>
+      <if test="questionName != null" >
+        #{questionName,jdbcType=VARCHAR},
+      </if>
+      <if test="questionContent != null" >
+        #{questionContent,jdbcType=VARCHAR},
+      </if>
+      <if test="questionType != null" >
+        #{questionType,jdbcType=INTEGER},
+      </if>
+      <if test="questionImg != null" >
+        #{questionImg,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tangzhe.cslg.entity.Question" >
+    update question
+    <set >
+      <if test="tpId != null" >
+        tp_id = #{tpId,jdbcType=VARCHAR},
+      </if>
+      <if test="pointId != null" >
+        point_id = #{pointId,jdbcType=VARCHAR},
+      </if>
+      <if test="pointName != null" >
+        point_name = #{pointName,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="quanzhong != null" >
+        quanzhong = #{quanzhong,jdbcType=DOUBLE},
+      </if>
+      <if test="questionName != null" >
+        question_name = #{questionName,jdbcType=VARCHAR},
+      </if>
+      <if test="questionContent != null" >
+        question_content = #{questionContent,jdbcType=VARCHAR},
+      </if>
+      <if test="questionType != null" >
+        question_type = #{questionType,jdbcType=INTEGER},
+      </if>
+      <if test="questionImg != null" >
+        question_img = #{questionImg,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tangzhe.cslg.entity.Question" >
+    update question
+    set tp_id = #{tpId,jdbcType=VARCHAR},
+      point_id = #{pointId,jdbcType=VARCHAR},
+      point_name = #{pointName,jdbcType=VARCHAR},
+      score = #{score,jdbcType=DOUBLE},
+      quanzhong = #{quanzhong,jdbcType=DOUBLE},
+      question_name = #{questionName,jdbcType=VARCHAR},
+      question_content = #{questionContent,jdbcType=VARCHAR},
+      question_type = #{questionType,jdbcType=INTEGER},
+      question_img = #{questionImg,jdbcType=VARCHAR},
+      order_no = #{orderNo,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="findCountByTpId" parameterType="string" resultType="java.lang.Integer">
+    select count(*)
+    from question
+    where tp_id = #{tpId}
+  </select>
+
+  <select id="findPageByTpId" resultType="com.tangzhe.cslg.pojo.QuestionVo">
+    SELECT q.id, q.point_name pointName, q.score, q.question_name questionName,
+          q.question_type questionType, tp.tp_name tpName, q.point_id pointId,
+	      q.question_content questionContent, q.order_no orderNo, q.quanzhong
+    FROM question q
+    LEFT JOIN test_paper tp ON tp.id = q.tp_id
+    WHERE q.tp_id = #{tpId}
+    ORDER BY q.order_no
+    LIMIT #{startRow}, #{pageSize}
+  </select>
+
+  <select id="findQuestionListByTestPaperId" parameterType="string" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM question
+    WHERE tp_id = #{id}
+    ORDER BY order_no
+  </select>
+
+  <select id="findQuestionListByPointId" parameterType="string" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM question
+    WHERE point_id = #{pointId}
+    ORDER BY order_no
+  </select>
+
+  <select id="findQuestionListByTpIdAndZbyyqId" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM question
+    WHERE tp_id = #{tpId}
+    AND point_id = #{pointId}
+    ORDER BY order_no
+  </select>
+
+</mapper>

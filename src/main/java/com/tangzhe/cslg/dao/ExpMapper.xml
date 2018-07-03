@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tangzhe.cslg.dao.ExpMapper" >
+  <resultMap id="BaseResultMap" type="com.tangzhe.cslg.entity.Exp" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="course_id" property="courseId" jdbcType="VARCHAR" />
+    <result column="point_id" property="pointId" jdbcType="VARCHAR" />
+    <result column="point_name" property="pointName" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="DOUBLE" />
+    <result column="quanzhong" property="quanzhong" jdbcType="DOUBLE" />
+    <result column="exp_name" property="expName" jdbcType="VARCHAR" />
+    <result column="exp_content" property="expContent" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="major_id" property="majorId" jdbcType="VARCHAR" />
+    <result column="teacher_id" property="teacherId" jdbcType="VARCHAR" />
+    <result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+    <result column="mid" property="mid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, course_id, point_id, point_name, score, quanzhong, exp_name, exp_content, type, 
+    major_id, teacher_id, teacher_name, mid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from exp
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from exp
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tangzhe.cslg.entity.Exp" >
+    insert into exp (id, course_id, point_id, 
+      point_name, score, quanzhong, 
+      exp_name, exp_content, type, 
+      major_id, teacher_id, teacher_name, mid
+      )
+    values (#{id,jdbcType=VARCHAR}, #{courseId,jdbcType=VARCHAR}, #{pointId,jdbcType=VARCHAR}, 
+      #{pointName,jdbcType=VARCHAR}, #{score,jdbcType=DOUBLE}, #{quanzhong,jdbcType=DOUBLE}, 
+      #{expName,jdbcType=VARCHAR}, #{expContent,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{majorId,jdbcType=VARCHAR}, #{teacherId,jdbcType=VARCHAR}, #{teacherName,jdbcType=VARCHAR},
+      #{mid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tangzhe.cslg.entity.Exp" >
+    insert into exp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="courseId != null" >
+        course_id,
+      </if>
+      <if test="pointId != null" >
+        point_id,
+      </if>
+      <if test="pointName != null" >
+        point_name,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="quanzhong != null" >
+        quanzhong,
+      </if>
+      <if test="expName != null" >
+        exp_name,
+      </if>
+      <if test="expContent != null" >
+        exp_content,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="majorId != null" >
+        major_id,
+      </if>
+      <if test="teacherId != null" >
+        teacher_id,
+      </if>
+      <if test="teacherName != null" >
+        teacher_name,
+      </if>
+      <if test="mid != null" >
+        mid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="courseId != null" >
+        #{courseId,jdbcType=VARCHAR},
+      </if>
+      <if test="pointId != null" >
+        #{pointId,jdbcType=VARCHAR},
+      </if>
+      <if test="pointName != null" >
+        #{pointName,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="quanzhong != null" >
+        #{quanzhong,jdbcType=DOUBLE},
+      </if>
+      <if test="expName != null" >
+        #{expName,jdbcType=VARCHAR},
+      </if>
+      <if test="expContent != null" >
+        #{expContent,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="majorId != null" >
+        #{majorId,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherId != null" >
+        #{teacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherName != null" >
+        #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="mid != null" >
+        #{mid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tangzhe.cslg.entity.Exp" >
+    update exp
+    <set >
+      <if test="courseId != null" >
+        course_id = #{courseId,jdbcType=VARCHAR},
+      </if>
+      <if test="pointId != null" >
+        point_id = #{pointId,jdbcType=VARCHAR},
+      </if>
+      <if test="pointName != null" >
+        point_name = #{pointName,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="quanzhong != null" >
+        quanzhong = #{quanzhong,jdbcType=DOUBLE},
+      </if>
+      <if test="expName != null" >
+        exp_name = #{expName,jdbcType=VARCHAR},
+      </if>
+      <if test="expContent != null" >
+        exp_content = #{expContent,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="majorId != null" >
+        major_id = #{majorId,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherId != null" >
+        teacher_id = #{teacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherName != null" >
+        teacher_name = #{teacherName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tangzhe.cslg.entity.Exp" >
+    update exp
+    set course_id = #{courseId,jdbcType=VARCHAR},
+      point_id = #{pointId,jdbcType=VARCHAR},
+      point_name = #{pointName,jdbcType=VARCHAR},
+      score = #{score,jdbcType=DOUBLE},
+      quanzhong = #{quanzhong,jdbcType=DOUBLE},
+      exp_name = #{expName,jdbcType=VARCHAR},
+      exp_content = #{expContent,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      major_id = #{majorId,jdbcType=VARCHAR},
+      teacher_id = #{teacherId,jdbcType=VARCHAR},
+      teacher_name = #{teacherName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="findCountByTeacherId" parameterType="string" resultType="java.lang.Integer">
+    select count(*)
+    from exp
+    where teacher_id = #{teacherId}
+  </select>
+
+  <select id="findPageByTeacherId" resultType="com.tangzhe.cslg.pojo.ExpVo">
+    SELECT e.id, e.point_name pointName, e.point_id pointId, e.score,
+          e.exp_name expName, e.exp_content expContent,
+          e.type, e.teacher_name teacherName, e.course_id courseId,
+          e.major_id majorId, c.course_name courseName, m.major_name majorName, e.quanzhong
+    FROM exp e
+    LEFT JOIN course c ON c.id = e.course_id
+    LEFT JOIN major m ON m.id = e.major_id
+    where e.teacher_id = #{teacherId}
+    LIMIT #{startRow}, #{pageSize}
+  </select>
+
+  <select id="findExpListByPointId" parameterType="string" resultMap="BaseResultMap">
+    SELECT *
+    FROM exp
+    WHERE point_id = #{pointId}
+  </select>
+
+  <select id="findExpByCourseIdAndExpName" resultMap="BaseResultMap">
+    SELECT *
+    FROM exp
+    WHERE course_id = #{courseId}
+    AND exp_name = #{expName}
+  </select>
+
+  <select id="findExpListByMidAndPointId" resultMap="BaseResultMap">
+    SELECT *
+    FROM exp
+    WHERE mid = #{mid}
+    and point_id = #{pointId}
+    and course_id = #{courseId}
+  </select>
+
+  <select id="findExpListByCourseIdAndMidAndPointIdAndTeacherId" resultMap="BaseResultMap">
+    SELECT *
+    FROM exp
+    WHERE mid = #{mid}
+    and point_id = #{pointId}
+    and course_id = #{courseId}
+    and teacher_id = #{teacherId}
+  </select>
+
+</mapper>

@@ -1,0 +1,4 @@
+[
+	{ "id":"01", "pId":"0", "name":"指标点设置", "page":"/page/byyq/byyq.action"},
+	{ "id":"02", "pId":"0", "name":"指标点权重矩阵", "page":"/page/byyq/byyqmb.action"}
+]

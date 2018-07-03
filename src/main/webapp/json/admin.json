@@ -1,0 +1,4 @@
+[
+	{ "id":"1001", "pId":"100", "name":"教师管理", "page":"/page/person/teacher.action"},
+	{ "id":"1002", "pId":"100", "name":"学生管理", "page":"/page/person/student.action"}
+]

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tangzhe.cslg.dao.PointMapper" >
+  <resultMap id="BaseResultMap" type="com.tangzhe.cslg.entity.Point" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="point_name" property="pointName" jdbcType="VARCHAR" />
+    <result column="point_desc" property="pointDesc" jdbcType="VARCHAR" />
+    <result column="major_id" property="majorId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, point_name, point_desc, major_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from index_point
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from index_point
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tangzhe.cslg.entity.Point" >
+    insert into index_point (id, point_name, point_desc, 
+      major_id)
+    values (#{id,jdbcType=VARCHAR}, #{pointName,jdbcType=VARCHAR}, #{pointDesc,jdbcType=VARCHAR}, 
+      #{majorId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tangzhe.cslg.entity.Point" >
+    insert into index_point
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pointName != null" >
+        point_name,
+      </if>
+      <if test="pointDesc != null" >
+        point_desc,
+      </if>
+      <if test="majorId != null" >
+        major_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="pointName != null" >
+        #{pointName,jdbcType=VARCHAR},
+      </if>
+      <if test="pointDesc != null" >
+        #{pointDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="majorId != null" >
+        #{majorId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tangzhe.cslg.entity.Point" >
+    update index_point
+    <set >
+      <if test="pointName != null" >
+        point_name = #{pointName,jdbcType=VARCHAR},
+      </if>
+      <if test="pointDesc != null" >
+        point_desc = #{pointDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="majorId != null" >
+        major_id = #{majorId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tangzhe.cslg.entity.Point" >
+    update index_point
+    set point_name = #{pointName,jdbcType=VARCHAR},
+      point_desc = #{pointDesc,jdbcType=VARCHAR},
+      major_id = #{majorId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="findByCount" resultType="java.lang.Integer">
+    select count(*)
+    from index_point
+    <where>
+      <if test="majorId != null">
+        major_id like '%${majorId}%'
+      </if>
+      <if test="pointName != null">
+        and point_name like '%${pointName}%'
+      </if>
+    </where>
+  </select>
+
+  <select id="findByPage" resultType="com.tangzhe.cslg.pojo.PointVo">
+    SELECT p.id, p.major_id majorId, m.major_name majorName,
+        p.point_name pointName, p.point_desc pointDesc
+    FROM index_point p
+    LEFT JOIN major m ON p.major_id = m.id
+    <where>
+      <if test="majorId != null">
+        major_id like '%${majorId}%'
+      </if>
+      <if test="pointName != null">
+        and point_name like '%${pointName}%'
+      </if>
+    </where>
+    LIMIT #{startRow}, #{pageSize}
+  </select>
+
+  <select id="findPointByMajorId" resultMap="BaseResultMap">
+    SELECT *
+    FROM index_point ip
+    LEFT JOIN point_course pc ON pc.point_id = ip.id
+    WHERE ip.major_id = #{majorId}
+    AND (pc.course_id IS NULL OR pc.course_id != #{courseId})
+  </select>
+
+  <select id="findPointByTestPaperId" parameterType="string" resultMap="BaseResultMap">
+    SELECT p.*
+    FROM index_point p
+    LEFT JOIN major m ON m.id = p.major_id
+    LEFT JOIN test_paper tp ON tp.major_id = m.id
+    WHERE tp.id = #{id}
+  </select>
+
+  <select id="findPointByCourseId" parameterType="string" resultMap="BaseResultMap">
+    SELECT *
+    FROM index_point ip
+    LEFT JOIN point_course pc ON pc.point_id = ip.id
+    WHERE course_id = #{courseId}
+  </select>
+
+  <select id="findPointListByMajorIdAndCourseId" resultMap="BaseResultMap">
+    SELECT *
+    FROM index_point ip
+    LEFT JOIN point_course pc ON pc.point_id = ip.id
+    WHERE ip.major_id = #{majorId}
+    AND pc.course_id = #{courseId}
+    ORDER BY ip.point_name
+  </select>
+
+</mapper>

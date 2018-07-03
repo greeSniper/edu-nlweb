@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tangzhe.cslg.dao.TeacherMapper" >
+  <resultMap id="BaseResultMap" type="com.tangzhe.cslg.entity.Teacher" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="depart_id" property="departId" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="positional" property="positional" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="VARCHAR" />
+    <result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="QQ" property="qq" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, depart_id, username, positional, gender, teacher_name, email, telephone, QQ, 
+    address, type, password
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from teacher
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from teacher
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tangzhe.cslg.entity.Teacher" >
+    insert into teacher (id, depart_id, username, 
+      positional, gender, teacher_name, 
+      email, telephone, QQ, 
+      address, type, password
+      )
+    values (#{id,jdbcType=VARCHAR}, #{departId,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{positional,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{teacherName,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tangzhe.cslg.entity.Teacher" >
+    insert into teacher
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="departId != null" >
+        depart_id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="positional != null" >
+        positional,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="teacherName != null" >
+        teacher_name,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="qq != null" >
+        QQ,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="departId != null" >
+        #{departId,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="positional != null" >
+        #{positional,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherName != null" >
+        #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tangzhe.cslg.entity.Teacher" >
+    update teacher
+    <set >
+      <if test="departId != null" >
+        depart_id = #{departId,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="positional != null" >
+        positional = #{positional,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherName != null" >
+        teacher_name = #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        QQ = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tangzhe.cslg.entity.Teacher" >
+    update teacher
+    set depart_id = #{departId,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      positional = #{positional,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      teacher_name = #{teacherName,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      QQ = #{qq,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      password = #{password,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="findTeacherByUsernameAndPwd" parameterType="com.tangzhe.cslg.entity.Teacher" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from teacher
+    where username = #{username} and password = #{password}
+  </select>
+
+  <select id="findByCount" resultType="java.lang.Integer">
+    select count(*) from teacher
+  </select>
+
+  <select id="findByPage" resultType="com.tangzhe.cslg.pojo.QueryVo">
+    SELECT t.id, t.depart_id departId, t.username,
+    t.positional, t.gender, t.teacher_name teacherName, t.email,
+    t.telephone, t.qq, t.address, t.type, d.depart_name departName
+    FROM teacher t
+    LEFT JOIN department d ON t.depart_id = d.id
+    LIMIT #{startRow}, #{pageSize}
+  </select>
+
+  <update id="updateType">
+    UPDATE teacher SET TYPE = #{type} WHERE id = #{id}
+  </update>
+
+  <select id="findCourseToAssociation" parameterType="string" resultType="com.tangzhe.cslg.entity.Course">
+    SELECT c.id, c.course_name courseName, c.course_englishname courseEnglishname,
+    c.course_type courseType , c.course_code courseCode
+    FROM course c
+    WHERE c.id NOT IN(
+                      SELECT c.id
+                      FROM course c
+                      RIGHT JOIN course_teacher ct ON c.id = ct.course_id
+                      LEFT JOIN teacher t ON ct.teacher_id = t.id
+                      WHERE ct.teacher_id = #{id}
+    )
+  </select>
+
+  <select id="findCourseByTeacherId" parameterType="string" resultType="com.tangzhe.cslg.entity.Course">
+    SELECT c.id, c.course_name courseName, c.course_englishname courseEnglishname,
+    c.course_type courseType , c.course_code courseCode
+    FROM course c
+    RIGHT JOIN course_teacher ct ON c.id = ct.course_id
+    LEFT JOIN teacher t ON ct.teacher_id = t.id
+    WHERE ct.teacher_id = #{id}
+  </select>
+
+  <delete id="deleteCourseTeacherByTeacherId" parameterType="string" >
+    delete from course_teacher
+    where teacher_id = #{id}
+  </delete>
+
+  <insert id="insertCourseTeacher">
+    INSERT INTO course_teacher VALUES(#{cid}, #{tid})
+  </insert>
+
+</mapper>

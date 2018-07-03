@@ -1,0 +1,6 @@
+[
+	{ "id":"11", "pId":"0", "name":"达成度分析", "page":"/page/pre/reach.action"},
+	{ "id":"11", "pId":"0", "name":"考试成绩", "page":"/page/pre/examres.action"},
+	{ "id":"11", "pId":"0", "name":"实验成绩", "page":"/page/pre/expres.action"},
+	{ "id":"11", "pId":"0", "name":"其他成绩", "page":"/page/pre/otherres.action"}
+]

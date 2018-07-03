@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tangzhe.cslg.dao.ClassCourseTeacherMapper" >
+  <resultMap id="BaseResultMap" type="com.tangzhe.cslg.entity.ClassCourseTeacher" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="class_id" property="classId" jdbcType="VARCHAR" />
+    <result column="course_id" property="courseId" jdbcType="VARCHAR" />
+    <result column="teacher_id" property="teacherId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, class_id, course_id, teacher_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from class_course_teacher
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from class_course_teacher
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tangzhe.cslg.entity.ClassCourseTeacher" >
+    insert into class_course_teacher (id, class_id, course_id, 
+      teacher_id)
+    values (#{id,jdbcType=VARCHAR}, #{classId,jdbcType=VARCHAR}, #{courseId,jdbcType=VARCHAR}, 
+      #{teacherId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tangzhe.cslg.entity.ClassCourseTeacher" >
+    insert into class_course_teacher
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="classId != null" >
+        class_id,
+      </if>
+      <if test="courseId != null" >
+        course_id,
+      </if>
+      <if test="teacherId != null" >
+        teacher_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="classId != null" >
+        #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="courseId != null" >
+        #{courseId,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherId != null" >
+        #{teacherId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tangzhe.cslg.entity.ClassCourseTeacher" >
+    update class_course_teacher
+    <set >
+      <if test="classId != null" >
+        class_id = #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="courseId != null" >
+        course_id = #{courseId,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherId != null" >
+        teacher_id = #{teacherId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tangzhe.cslg.entity.ClassCourseTeacher" >
+    update class_course_teacher
+    set class_id = #{classId,jdbcType=VARCHAR},
+      course_id = #{courseId,jdbcType=VARCHAR},
+      teacher_id = #{teacherId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectByClassIdAndCourseIdAndTeacherId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from class_course_teacher
+    WHERE class_id = #{classId}
+    AND course_id = #{courseId}
+    AND teacher_id = #{teacherId}
+  </select>
+
+  <select id="findCourseCountByClassId" parameterType="string" resultType="java.lang.Integer">
+    SELECT COUNT(*)
+    FROM class_course_teacher cct
+    LEFT JOIN course c ON c.id = cct.course_id
+    LEFT JOIN teacher t ON t.id = cct.teacher_id
+    LEFT JOIN department d ON d.id = t.depart_id
+    WHERE class_id = #{classId}
+  </select>
+
+  <select id="findCoursePageByClassId" resultType="com.tangzhe.cslg.pojo.CourseVo">
+    SELECT c.id, c.course_name courseName,
+          c.course_code courseCode, t.id teacherId,
+          t.teacher_name teacherName, d.depart_name departName
+    FROM class_course_teacher cct
+    LEFT JOIN course c ON c.id = cct.course_id
+    LEFT JOIN teacher t ON t.id = cct.teacher_id
+    LEFT JOIN department d ON d.id = t.depart_id
+    WHERE class_id = #{classId}
+    LIMIT #{startRow}, #{pageSize}
+  </select>
+
+</mapper>

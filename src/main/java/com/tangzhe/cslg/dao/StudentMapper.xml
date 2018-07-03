@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tangzhe.cslg.dao.StudentMapper" >
+  <resultMap id="BaseResultMap" type="com.tangzhe.cslg.entity.Student" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="class_id" property="classId" jdbcType="VARCHAR" />
+    <result column="stu_code" property="stuCode" jdbcType="VARCHAR" />
+    <result column="stu_name" property="stuName" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="VARCHAR" />
+    <result column="class_name" property="className" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+    <result column="major_id" property="majorId" jdbcType="VARCHAR" />
+    <result column="major_name" property="majorName" jdbcType="VARCHAR" />
+    <result column="id_card" property="idCard" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="enrollment" property="enrollment" jdbcType="VARCHAR" />
+    <result column="at_school" property="atSchool" jdbcType="INTEGER" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="commend_count" property="commendCount" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, class_id, stu_code, stu_name, gender, class_name, grade, major_id, major_name, 
+    id_card, telephone, address, enrollment, at_school, birthday, email, commend_count
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from student
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tangzhe.cslg.entity.Student" >
+    insert into student (id, class_id, stu_code, 
+      stu_name, gender, class_name, 
+      grade, major_id, major_name, 
+      id_card, telephone, address, 
+      enrollment, at_school, birthday, 
+      email, commend_count)
+    values (#{id,jdbcType=VARCHAR}, #{classId,jdbcType=VARCHAR}, #{stuCode,jdbcType=VARCHAR}, 
+      #{stuName,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{className,jdbcType=VARCHAR}, 
+      #{grade,jdbcType=VARCHAR}, #{majorId,jdbcType=VARCHAR}, #{majorName,jdbcType=VARCHAR}, 
+      #{idCard,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{enrollment,jdbcType=VARCHAR}, #{atSchool,jdbcType=INTEGER}, #{birthday,jdbcType=DATE}, 
+      #{email,jdbcType=VARCHAR}, #{commendCount,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tangzhe.cslg.entity.Student" >
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="classId != null" >
+        class_id,
+      </if>
+      <if test="stuCode != null" >
+        stu_code,
+      </if>
+      <if test="stuName != null" >
+        stu_name,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="className != null" >
+        class_name,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="majorId != null" >
+        major_id,
+      </if>
+      <if test="majorName != null" >
+        major_name,
+      </if>
+      <if test="idCard != null" >
+        id_card,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="enrollment != null" >
+        enrollment,
+      </if>
+      <if test="atSchool != null" >
+        at_school,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="commendCount != null" >
+        commend_count,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="classId != null" >
+        #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="stuCode != null" >
+        #{stuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stuName != null" >
+        #{stuName,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="className != null" >
+        #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="majorId != null" >
+        #{majorId,jdbcType=VARCHAR},
+      </if>
+      <if test="majorName != null" >
+        #{majorName,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null" >
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="enrollment != null" >
+        #{enrollment,jdbcType=VARCHAR},
+      </if>
+      <if test="atSchool != null" >
+        #{atSchool,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="commendCount != null" >
+        #{commendCount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tangzhe.cslg.entity.Student" >
+    update student
+    <set >
+      <if test="classId != null" >
+        class_id = #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="stuCode != null" >
+        stu_code = #{stuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stuName != null" >
+        stu_name = #{stuName,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="className != null" >
+        class_name = #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="majorId != null" >
+        major_id = #{majorId,jdbcType=VARCHAR},
+      </if>
+      <if test="majorName != null" >
+        major_name = #{majorName,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null" >
+        id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="enrollment != null" >
+        enrollment = #{enrollment,jdbcType=VARCHAR},
+      </if>
+      <if test="atSchool != null" >
+        at_school = #{atSchool,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="commendCount != null" >
+        commend_count = #{commendCount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tangzhe.cslg.entity.Student" >
+    update student
+    set class_id = #{classId,jdbcType=VARCHAR},
+      stu_code = #{stuCode,jdbcType=VARCHAR},
+      stu_name = #{stuName,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      class_name = #{className,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=VARCHAR},
+      major_id = #{majorId,jdbcType=VARCHAR},
+      major_name = #{majorName,jdbcType=VARCHAR},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      enrollment = #{enrollment,jdbcType=VARCHAR},
+      at_school = #{atSchool,jdbcType=INTEGER},
+      birthday = #{birthday,jdbcType=DATE},
+      email = #{email,jdbcType=VARCHAR},
+      commend_count = #{commendCount,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="findByCount" parameterType="com.tangzhe.cslg.pojo.StudentVo" resultType="java.lang.Integer">
+    SELECT COUNT(*)
+    FROM student s
+    LEFT JOIN major m ON m.id = s.major_id
+    LEFT JOIN department d ON d.id = m.depart_id
+    <where>
+      <if test="stuCode != null">
+        s.stu_code like '%${stuCode}%'
+      </if>
+      <if test="stuName != null">
+        and s.stu_name like '%${stuName}%'
+      </if>
+      <if test="departName != null">
+        and d.depart_name like '%${departName}%'
+      </if>
+      <if test="majorName != null">
+        and s.major_name like '%${majorName}%'
+      </if>
+      <if test="className != null">
+        and s.class_name like '%${className}%'
+      </if>
+    </where>
+  </select>
+
+  <select id="findByPage" resultType="com.tangzhe.cslg.pojo.StudentVo">
+    SELECT s.id, s.stu_code stuCode, s.stu_name stuName,
+            s.gender, s.class_name className, s.major_name majorName,
+            LEFT(s.grade,4) grade, s.telephone, s.id_card idCard,
+            d.depart_name departName
+    FROM student s
+    LEFT JOIN major m ON m.id = s.major_id
+    LEFT JOIN department d ON d.id = m.depart_id
+    <where>
+      <if test="stuCode != null">
+        s.stu_code like '%${stuCode}%'
+      </if>
+      <if test="stuName != null">
+        and s.stu_name like '%${stuName}%'
+      </if>
+      <if test="departName != null">
+        and d.depart_name like '%${departName}%'
+      </if>
+      <if test="majorName != null">
+        and s.major_name like '%${majorName}%'
+      </if>
+      <if test="className != null">
+        and s.class_name like '%${className}%'
+      </if>
+    </where>
+    LIMIT #{startRow}, #{pageSize}
+  </select>
+
+  <select id="findStudentListByClassId" parameterType="string" resultMap="BaseResultMap">
+    SELECT *
+    FROM student
+    WHERE class_id = #{classId}
+    ORDER BY id
+  </select>
+
+  <insert id="insertStuTpScore" parameterType="com.tangzhe.cslg.pojo.StuTpScoreVo" >
+    insert into stu_tp_score
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stuId != null" >
+        stu_id,
+      </if>
+      <if test="tpId != null" >
+        tp_id,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="stuName != null" >
+        stu_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stuId != null" >
+        #{stuId,jdbcType=VARCHAR},
+      </if>
+      <if test="tpId != null" >
+        #{tpId,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=VARCHAR},
+      </if>
+      <if test="stuName != null" >
+        #{stuName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <insert id="insertStuExp" parameterType="com.tangzhe.cslg.pojo.StuExpVo" >
+    insert into stu_exp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stuId != null" >
+        stu_id,
+      </if>
+      <if test="expId != null" >
+        exp_id,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="quanzhong != null" >
+        quanzhong,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stuId != null" >
+        #{stuId,jdbcType=VARCHAR},
+      </if>
+      <if test="expId != null" >
+        #{expId,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="quanzhong != null" >
+        #{quanzhong,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="findStuExpByStuIdAndExpId" resultType="com.tangzhe.cslg.pojo.StuExpVo">
+    SELECT s.stu_id stuId, s.exp_id expId, s.score, s.quanzhong
+    FROM stu_exp s
+    WHERE s.stu_id = #{stuId}
+    AND s.exp_id = #{expId}
+  </select>
+
+  <select id="findStudentListByClassIdAndTpId" resultType="com.tangzhe.cslg.pojo.StuTpScoreVo">
+    SELECT sts.stu_id stuId, sts.tp_id tpId, sts.score, sts.stu_name stuName
+    FROM stu_tp_score sts
+    LEFT JOIN student s ON s.id = sts.stu_id
+    WHERE s.class_id = #{classId}
+    AND sts.tp_id = #{tpId}
+  </select>
+
+  <insert id="insertReach">
+    insert into reach values (#{stuId}, #{pointId}, #{courseId}, #{reachSum})
+  </insert>
+
+  <select id="findReachListByCount" parameterType="com.tangzhe.cslg.pojo.ReachVo" resultType="java.lang.Integer">
+    SELECT COUNT(*)
+    FROM reach r
+    LEFT JOIN student s ON s.id = r.stu_id
+    LEFT JOIN zbyyq ip ON ip.id = r.point_id
+    LEFT JOIN course c ON c.id = r.course_id
+    <where>
+      <if test="stuId != null">
+        r.stu_id like '%${stuId}%'
+      </if>
+      <if test="stuName != null">
+        and s.stu_name like '%${stuName}%'
+      </if>
+      <if test="courseName != null">
+        and c.course_name like '%${courseName}%'
+      </if>
+      <if test="pointName != null">
+        and ip.name like '%${pointName}%'
+      </if>
+      <if test="className != null">
+        and s.class_name like '%${className}%'
+      </if>
+      <if test="majorName != null">
+        and s.major_name like '%${majorName}%'
+      </if>
+    </where>
+  </select>
+
+  <select id="findReachListByPage" resultType="com.tangzhe.cslg.pojo.ReachVo">
+    SELECT r.stu_id id, r.stu_id stuId, r.reach,
+          s.stu_name stuName, s.class_name className, s.major_name majorName,
+          ip.name pointName, c.course_name courseName
+    FROM reach r
+    LEFT JOIN student s ON s.id = r.stu_id
+    LEFT JOIN zbyyq ip ON ip.id = r.point_id
+    LEFT JOIN course c ON c.id = r.course_id
+    <where>
+      <if test="stuId != null">
+        r.stu_id like '%${stuId}%'
+      </if>
+      <if test="stuName != null">
+        and s.stu_name like '%${stuName}%'
+      </if>
+      <if test="courseName != null">
+        and c.course_name like '%${courseName}%'
+      </if>
+      <if test="pointName != null">
+        and ip.name like '%${pointName}%'
+      </if>
+      <if test="className != null">
+        and s.class_name like '%${className}%'
+      </if>
+      <if test="majorName != null">
+        and s.major_name like '%${majorName}%'
+      </if>
+    </where>
+    ORDER BY s.stu_name, ip.order_no
+    LIMIT #{startRow}, #{pageSize}
+  </select>
+
+  <select id="findReachVoListByStuId" parameterType="string" resultType="com.tangzhe.cslg.pojo.ReachVo">
+    SELECT r.stu_id id, r.stu_id stuId, r.reach,
+          s.stu_name stuName, s.class_name className, s.major_name majorName,
+          ip.point_name pointName, c.course_name courseName
+    FROM reach r
+    LEFT JOIN student s ON s.id = r.stu_id
+    LEFT JOIN index_point ip ON ip.id = r.point_id
+    LEFT JOIN course c ON c.id = r.course_id
+    WHERE r.stu_id = #{id}
+  </select>
+
+  <select id="findReachVoListByStuIdAndCourseId" resultType="com.tangzhe.cslg.pojo.ReachVo">
+    SELECT r.stu_id id, r.stu_id stuId, r.reach,
+    s.stu_name stuName, s.class_name className, s.major_name majorName,
+    ip.name pointName, c.course_name courseName
+    FROM reach r
+    LEFT JOIN student s ON s.id = r.stu_id
+    LEFT JOIN zbyyq ip ON ip.id = r.point_id
+    LEFT JOIN course c ON c.id = r.course_id
+    WHERE r.stu_id = #{stuId}
+    AND course_id = #{courseId}
+  </select>
+
+  <delete id="deleteReachBatch">
+    delete from reach
+  </delete>
+
+  <select id="findStuOtherByStuIdAndOtherId" resultType="com.tangzhe.cslg.pojo.StuExpVo">
+     SELECT s.stu_id stuId, s.other_id otherId, s.score, s.quanzhong
+     FROM stu_other s
+     WHERE s.stu_id = #{stuId}
+     AND s.other_id = #{otherId}
+  </select>
+
+  <select id="findReachByStuIdAndZbyyqIdAndCourseId" resultType="com.tangzhe.cslg.pojo.ReachVo">
+    SELECT r.stu_id id, r.stu_id stuId, r.reach,
+        s.stu_name stuName, s.class_name className, s.major_name majorName,
+        ip.name pointName, c.course_name courseName
+    FROM reach r
+    LEFT JOIN student s ON s.id = r.stu_id
+    LEFT JOIN zbyyq ip ON ip.id = r.point_id
+    LEFT JOIN course c ON c.id = r.course_id
+    WHERE r.stu_id = #{stuId}
+    AND r.point_id = #{zbyyqId}
+    AND course_id = #{courseId}
+  </select>
+
+  <select id="findQuanzhongByCourseIdAndZbyyqIdAndMid" resultType="com.tangzhe.cslg.pojo.QuanzhongVo">
+    SELECT quanzhong
+    FROM course_byyq
+    WHERE course_id = #{courseId}
+    AND zbyyq_id = #{zbyyqId}
+    AND MID = #{mid}
+  </select>
+
+  <select id="findReachByMidAndPointIdAndCourseId" resultType="com.tangzhe.cslg.pojo.ReachVo">
+    SELECT r.reach
+    FROM reach r
+    LEFT JOIN student s ON s.id = r.stu_id
+    LEFT JOIN class_byyqmb cb ON s.class_id = cb.class_id
+    WHERE cb.mid = #{mid}
+    AND r.point_id = #{pointId}
+    AND r.course_id = #{courseId}
+  </select>
+
+  <select id="findReachSearchListByCount" parameterType="com.tangzhe.cslg.pojo.ReachSearchVo" resultType="java.lang.Integer">
+    SELECT count(*)
+    FROM reach r
+    LEFT JOIN student s ON s.id = r.stu_id
+    LEFT JOIN zbyyq ip ON ip.id = r.point_id
+    LEFT JOIN course c ON c.id = r.course_id
+    WHERE 1=1
+    <if test="grade != null">
+      AND s.grade like '%${grade}%'
+    </if>
+    <if test="classId != null">
+      AND s.class_id = #{classId}
+    </if>
+    <if test="courseId != null">
+      AND r.course_id = #{courseId}
+    </if>
+    <if test="pointId != null">
+      AND r.point_id = #{pointId}
+    </if>
+    AND r.reach &lt; #{reach}
+  </select>
+
+  <select id="findReachSearchListByPage" resultType="com.tangzhe.cslg.pojo.ReachSearchVo">
+    SELECT r.stu_id id, r.stu_id stuId, s.stu_name stuName,
+      ip.name pointName, s.class_name className,
+      s.major_name majorName, LEFT(s.grade,4) grade,
+      r.reach
+    FROM reach r
+    LEFT JOIN student s ON s.id = r.stu_id
+    LEFT JOIN zbyyq ip ON ip.id = r.point_id
+    LEFT JOIN course c ON c.id = r.course_id
+    WHERE 1=1
+    <if test="grade != null">
+      AND s.grade like '%${grade}%'
+    </if>
+    <if test="classId != null">
+      AND s.class_id = #{classId}
+    </if>
+    <if test="courseId != null">
+      AND r.course_id = #{courseId}
+    </if>
+    <if test="pointId != null">
+      AND r.point_id = #{pointId}
+    </if>
+    AND r.reach &lt; #{reach}
+    LIMIT #{startRow}, #{pageSize}
+  </select>
+
+  <select id="findDownload" parameterType="com.tangzhe.cslg.pojo.ReachSearchVo" resultType="com.tangzhe.cslg.pojo.ReachSearchVo">
+    SELECT r.stu_id id, r.stu_id stuId, s.stu_name stuName,
+      ip.name pointName, s.class_name className,
+      s.major_name majorName, LEFT(s.grade,4) grade,
+      r.reach
+    FROM reach r
+    LEFT JOIN student s ON s.id = r.stu_id
+    LEFT JOIN zbyyq ip ON ip.id = r.point_id
+    LEFT JOIN course c ON c.id = r.course_id
+    WHERE 1=1
+    <if test="grade != null">
+      AND s.grade like '%${grade}%'
+    </if>
+    <if test="classId != null">
+      AND s.class_id = #{classId}
+    </if>
+    <if test="courseId != null">
+      AND r.course_id = #{courseId}
+    </if>
+    <if test="pointId != null">
+      AND r.point_id = #{pointId}
+    </if>
+    AND r.reach &lt; #{reach}
+  </select>
+
+</mapper>

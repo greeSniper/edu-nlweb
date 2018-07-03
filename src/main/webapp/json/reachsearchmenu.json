@@ -1,0 +1,6 @@
+[
+	{ "id":"21", "pId":"0", "name":"学生达成度查询", "page":"/page/search/stu_reach_search.action"},
+	{ "id":"22", "pId":"0", "name":"课程达成度查询", "page":"/page/search/course_reach_search.action"},
+	{ "id":"23", "pId":"0", "name":"毕业要求达成度查询", "page":"/page/search/point_reach_search.action"},
+	{ "id":"24", "pId":"0", "name":"达成度筛选", "page":"/page/search/reach_search.action"}
+]

@@ -1,0 +1,4 @@
+[
+	{ "id":"12", "pId":"0", "name":"班级设置", "page":"/page/sysadmin/class.action"},
+	{ "id":"13", "pId":"0", "name":"课程设置", "page":"/page/sysadmin/course.action"}
+]

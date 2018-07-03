@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tangzhe.cslg.dao.CslgClassMapper" >
+  <resultMap id="BaseResultMap" type="com.tangzhe.cslg.entity.CslgClass" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="major_id" property="majorId" jdbcType="VARCHAR" />
+    <result column="class_name" property="className" jdbcType="VARCHAR" />
+    <result column="class_code" property="classCode" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, major_id, class_name, class_code, grade
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cslg_class
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from cslg_class
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tangzhe.cslg.entity.CslgClass" >
+    insert into cslg_class (id, major_id, class_name, 
+      class_code, grade)
+    values (#{id,jdbcType=VARCHAR}, #{majorId,jdbcType=VARCHAR}, #{className,jdbcType=VARCHAR}, 
+      #{classCode,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tangzhe.cslg.entity.CslgClass" >
+    insert into cslg_class
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="majorId != null" >
+        major_id,
+      </if>
+      <if test="className != null" >
+        class_name,
+      </if>
+      <if test="classCode != null" >
+        class_code,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="majorId != null" >
+        #{majorId,jdbcType=VARCHAR},
+      </if>
+      <if test="className != null" >
+        #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="classCode != null" >
+        #{classCode,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tangzhe.cslg.entity.CslgClass" >
+    update cslg_class
+    <set >
+      <if test="majorId != null" >
+        major_id = #{majorId,jdbcType=VARCHAR},
+      </if>
+      <if test="className != null" >
+        class_name = #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="classCode != null" >
+        class_code = #{classCode,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tangzhe.cslg.entity.CslgClass" >
+    update cslg_class
+    set major_id = #{majorId,jdbcType=VARCHAR},
+      class_name = #{className,jdbcType=VARCHAR},
+      class_code = #{classCode,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="findByCount" parameterType="com.tangzhe.cslg.pojo.QueryVo" resultType="java.lang.Integer">
+    SELECT COUNT(*)
+    FROM cslg_class c
+    LEFT JOIN major m ON c.major_id = m.id
+    <where>
+      <if test="majorName != null">
+        m.major_name like '%${majorName}%'
+      </if>
+      <if test="className != null">
+        and c.class_name like '%${className}%'
+      </if>
+      <if test="classCode != null">
+        and c.class_code like '%${classCode}%'
+      </if>
+      <if test="grade != null">
+        and c.grade like '%${grade}%'
+      </if>
+    </where>
+  </select>
+
+  <select id="findByPage" parameterType="com.tangzhe.cslg.pojo.QueryVo" resultType="com.tangzhe.cslg.pojo.QueryVo">
+    SELECT c.id, c.class_name className, c.class_code classCode,
+    c.grade, c.major_id majorId, m.major_name majorName,
+    d.depart_name departName
+    FROM cslg_class c
+    LEFT JOIN major m ON c.major_id = m.id
+    LEFT JOIN department d ON m.depart_id = d.id
+    <where>
+      <if test="majorName != null">
+        m.major_name like '%${majorName}%'
+      </if>
+      <if test="className != null">
+        and c.class_name like '%${className}%'
+      </if>
+      <if test="classCode != null">
+        and c.class_code like '%${classCode}%'
+      </if>
+      <if test="grade != null">
+        and c.grade like '%${grade}%'
+      </if>
+    </where>
+    LIMIT #{startRow}, #{pageSize}
+  </select>
+
+  <select id="findByName" parameterType="string" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cslg_class
+    where class_name = #{className}
+  </select>
+
+  <select id="findClassListByTeacherId" parameterType="string" resultMap="BaseResultMap">
+    SELECT DISTINCT cc.*
+    FROM cslg_class cc
+    LEFT JOIN class_course_teacher cct ON cct.class_id = cc.id
+    WHERE cct.teacher_id = #{teacherId}
+  </select>
+
+  <select id="findClassByyqmbByClassId" parameterType="string" resultType="com.tangzhe.cslg.pojo.ClassByyqmbVo">
+    SELECT class_id classId, mid
+    FROM class_byyqmb
+    WHERE class_id = #{classId}
+  </select>
+
+  <insert id="insertClassByyqmb">
+    insert into class_byyqmb values (#{classId}, #{mid})
+  </insert>
+
+  <delete id="deleteClassByyqmb">
+    delete from class_byyqmb
+    where class_id = #{classId}
+    and mid = #{mid}
+  </delete>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    SELECT * from cslg_class
+  </select>
+
+</mapper>

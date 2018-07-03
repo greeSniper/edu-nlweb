@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tangzhe.cslg.dao.ZbyyqMapper" >
+  <resultMap id="BaseResultMap" type="com.tangzhe.cslg.entity.Zbyyq" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="fid" property="fid" jdbcType="VARCHAR" />
+    <result column="fname" property="fname" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="byyq_desc" property="byyqDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, fid, fname, name, byyq_desc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from zbyyq
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from zbyyq
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tangzhe.cslg.entity.Zbyyq" >
+    insert into zbyyq (id, fid, fname, 
+      name, byyq_desc)
+    values (#{id,jdbcType=VARCHAR}, #{fid,jdbcType=VARCHAR}, #{fname,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{byyqDesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tangzhe.cslg.entity.Zbyyq" >
+    insert into zbyyq
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="fid != null" >
+        fid,
+      </if>
+      <if test="fname != null" >
+        fname,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="byyqDesc != null" >
+        byyq_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="fid != null" >
+        #{fid,jdbcType=VARCHAR},
+      </if>
+      <if test="fname != null" >
+        #{fname,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="byyqDesc != null" >
+        #{byyqDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tangzhe.cslg.entity.Zbyyq" >
+    update zbyyq
+    <set >
+      <if test="fid != null" >
+        fid = #{fid,jdbcType=VARCHAR},
+      </if>
+      <if test="fname != null" >
+        fname = #{fname,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="byyqDesc != null" >
+        byyq_desc = #{byyqDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tangzhe.cslg.entity.Zbyyq" >
+    update zbyyq
+    set fid = #{fid,jdbcType=VARCHAR},
+      fname = #{fname,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      byyq_desc = #{byyqDesc,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="findByCount" resultType="java.lang.Integer">
+    select count(*) from zbyyq
+  </select>
+
+  <select id="findByPage" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM zbyyq
+    order by order_no
+    LIMIT #{startRow}, #{pageSize}
+  </select>
+
+  <select id="findFbyyqList" resultType="com.tangzhe.cslg.pojo.FbyyqVo">
+    SELECT id fid, name fname FROM fbyyq ORDER BY order_no
+  </select>
+
+  <select id="findFbyyqByFid" parameterType="string" resultType="com.tangzhe.cslg.pojo.FbyyqVo">
+    SELECT id fid, NAME fname FROM fbyyq WHERE id = #{fid}
+  </select>
+
+  <select id="findByyqVoGroupByFid" resultType="com.tangzhe.cslg.pojo.ByyqVo">
+    SELECT fid id, fname name, COUNT(fid) size
+    FROM zbyyq
+    GROUP BY fid
+    ORDER BY order_no
+  </select>
+
+  <select id="findZbyyqListByFid" parameterType="string" resultType="com.tangzhe.cslg.pojo.PointVo">
+    SELECT
+    id, fid, fname, name, byyq_desc byyqDesc, order_no orderNo
+    FROM zbyyq
+    WHERE fid = #{id}
+    ORDER BY order_no
+  </select>
+
+  <insert id="insertToCourseByyq">
+    insert into course_byyq
+    values (#{courseId}, #{zbyyqId}, #{mid}, #{quanzhong})
+  </insert>
+
+  <select id="findQzListByMidAndCourseId" resultType="com.tangzhe.cslg.pojo.QuanzhongVo">
+    SELECT cb.zbyyq_id id, cb.quanzhong
+    FROM course_byyq cb
+    WHERE cb.mid = #{mid}
+    AND cb.course_id = #{courseId}
+  </select>
+
+  <delete id="deleteCourseByyqByMid" parameterType="string">
+    delete from course_byyq
+    where mid = #{mid}
+  </delete>
+
+  <select id="findZbbyqByCourseId" parameterType="string" resultType="com.tangzhe.cslg.entity.Zbyyq">
+    SELECT z.*
+    FROM course_byyq cb
+    LEFT JOIN zbyyq z ON z.id = cb.zbyyq_id
+    WHERE cb.course_id = #{courseId}
+    ORDER BY z.order_no
+  </select>
+
+  <select id="findAllZbyyqList" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM zbyyq
+    ORDER BY order_no
+  </select>
+
+  <select id="findAllFbyyq" resultType="com.tangzhe.cslg.pojo.FbyyqVo">
+    SELECT id fid, name fname
+    FROM fbyyq
+    ORDER BY order_no
+  </select>
+
+  <select id="findPointStatisticListByFbyyqId" parameterType="string" resultType="com.tangzhe.cslg.pojo.PointStatistic">
+    SELECT id pointId, NAME pointName, byyq_desc 'desc'
+    FROM zbyyq
+    where fid = #{fid}
+    ORDER BY order_no
+  </select>
+
+  <select id="findQuanzhongByMidAndZbyyqIdAndCourseId" resultType="java.lang.Double">
+    SELECT quanzhong
+    FROM course_byyq
+    WHERE mid = #{mid}
+    AND zbyyq_id = #{pointId}
+    AND course_id = #{courseId}
+  </select>
+
+  <select id="findByyqByCount" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM fbyyq
+  </select>
+
+  <select id="findByyqByPage" resultType="com.tangzhe.cslg.pojo.FbyyqVo">
+    SELECT id fid, name fname
+    FROM fbyyq
+    order by order_no
+    LIMIT #{startRow}, #{pageSize}
+  </select>
+
+  <select id="findFbyyqById" parameterType="string" resultType="com.tangzhe.cslg.pojo.FbyyqVo">
+    SELECT id fid, name fname
+    FROM fbyyq
+    where id = #{id}
+  </select>
+
+</mapper>
